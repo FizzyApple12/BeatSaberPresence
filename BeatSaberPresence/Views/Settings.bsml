@@ -1,0 +1,17 @@
+﻿<scrollable-settings-container pref-width='100'>
+    <checkbox on-change='enableChange' bind-value='true' value='enable' apply-on-change='true' text='Enable BeatSaberPresence' hover-hint='Enables or disables the Rich Presence in Discord'></checkbox>
+    
+    <horizontal pad-bottom='3' horizontal-fit='PreferredSize'></horizontal>
+
+    <checkbox on-change='largeImageChange' bind-value='true' value='largeImage' apply-on-change='true' text='Large Image' hover-hint='Enables or disables the large Beat Saber cover art image. (if disabled, this will give your text more space)'></checkbox>
+    <checkbox on-change='smallImageChange' bind-value='true' value='smallImage' apply-on-change='true' text='        Small Image' hover-hint='Enables or disabled the small box or saber that is shown depending on if you are in a menu or in game. (the large image needs to be enabled to use this)'></checkbox>
+
+    <horizontal pad-bottom='3' horizontal-fit='PreferredSize'></horizontal>
+
+    <checkbox on-change='timerChange' bind-value='true' value='timer' apply-on-change='true' text='Timer' hover-hint='Enables or disables the timer which counts how long you have been in a menu or in game.'></checkbox>
+    <checkbox on-change='countDownChange' bind-value='true' value='countDown' apply-on-change='true' text='        Count Down in Game' hover-hint='Makes the timer count down to show the remaining time in the song when in game.'></checkbox>
+
+    <horizontal pad-bottom='3' horizontal-fit='PreferredSize'></horizontal>
+
+    <text text='To change the Rich Presence text, edit the "BeatSaberPresence.json" file in a text editor'></text>
+</scrollable-settings-container>

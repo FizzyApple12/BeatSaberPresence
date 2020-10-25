@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatSaberPresence", "BeatSaberPresence\BeatSaberPresence.csproj", "{F30FEA77-CDE7-4F84-A403-FF05E6CBA35C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatSaberPresence", "BeatSaberPresence\BeatSaberPresence.csproj", "{453B50C5-AD8E-4461-A2E0-6DDC3B0156FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F30FEA77-CDE7-4F84-A403-FF05E6CBA35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F30FEA77-CDE7-4F84-A403-FF05E6CBA35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F30FEA77-CDE7-4F84-A403-FF05E6CBA35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F30FEA77-CDE7-4F84-A403-FF05E6CBA35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{453B50C5-AD8E-4461-A2E0-6DDC3B0156FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{453B50C5-AD8E-4461-A2E0-6DDC3B0156FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{453B50C5-AD8E-4461-A2E0-6DDC3B0156FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{453B50C5-AD8E-4461-A2E0-6DDC3B0156FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DD2FE4D6-F35F-4C9B-84A1-75859CA5E986}
+		SolutionGuid = {E2CC400D-CA4B-4E4D-B565-BF5631A433F9}
 	EndGlobalSection
 EndGlobal
