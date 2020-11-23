@@ -75,8 +75,8 @@ Snippet | Description | Replacement Example | Works In
 ## What libraries or other pluginsdoes it need?
 
 This plugin is built using BSIPA4 so you need that, as well as
- * BS Utils 1.6.1 or greater
- * BeatSaberMarkupLanguage 1.4.0 or greater
+ * BS Utils 1.6.5 or greater
+ * BeatSaberMarkupLanguage 1.4.2 or greater
  * DiscordCore 1.0.3.0 or greater
 
 <br/>
