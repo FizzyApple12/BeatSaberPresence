@@ -38,6 +38,10 @@ Inside of the BeatSaberPresence.json (Beat Saber/UserData/BeatSaberPresence.json
   * The top and bottom lines underneath "Beat Saber" (``GameTopLine`` and ``GameBottomLine``)
   * The text shown when you hover over the Beat Saber cover art (``GameLargeImageLine``)
   * The text shown when you hover over the small icon (``GameSmallImageLine``)
+* The Rich Presence when you are Paused:
+  * The top and bottom lines underneath "Beat Saber" (``PauseTopLine`` and ``PauseBottomLine``)
+  * The text shown when you hover over the Beat Saber cover art (``PauseLargeImageLine``)
+  * The text shown when you hover over the small icon (``PauseSmallImageLine``)
 
 When customizing the text, you can insert snippets which replace themselves with game data.
 
