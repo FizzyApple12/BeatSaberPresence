@@ -4,73 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DiscordRPC;
-using DiscordRPC.Logging;
+using DiscordCore;
 using IPA.Utilities;
 using UnityEngine;
 using BeatSaberPresence.Config;
 using static BeatSaberAPI.DataTransferObjects.LevelScoreResult;
+using Discord;
+using Zenject;
 
 namespace BeatSaberPresence {
-    public class BeatSaberPresenceController : MonoBehaviour {
+    public class BeatSaberPresenceController {
         public static BeatSaberPresenceController Instance { get; private set; }
 
-        public string clientId = "708741346403287113";
-        public string steamId = "620980";
+        public long clientId = 708741346403287113;
 
         public bool inGame = false;
 
-        public DiscordRpcClient client = null;
-
-        public User user;
+        public DiscordInstance discordInstance = null;
+        public User discordUser;
 
         private GameplayCoreSceneSetupData gameplayCoreSceneSetupData;
 
-        private void Awake() {
+        public void Initialize() {
             if (Instance != null) {
-                Logger.log?.Warn($"Instance of {this.GetType().Name} already exists, destroying.");
-                GameObject.DestroyImmediate(this);
+                Logger.log?.Info("BeatSaberPresenceController has already been initalized, stopping");
                 return;
             }
-            GameObject.DontDestroyOnLoad(this);
             Instance = this;
-        }
 
-        private void Start() {
+            discordInstance = DiscordManager.instance.CreateInstance(new DiscordSettings() {
+                modId = "BeatSaberPresence",
+                modName = "BeatSaberPresence",
+                appId = clientId,
+                handleInvites = false
+            });
 
-        }
-
-        private void Update() {
-            client.Invoke();
-        }
-
-        private void LateUpdate() {
-
-        }
-
-        private void OnEnable() {
-            client = new DiscordRpcClient(
-                applicationID: clientId,
-                autoEvents: false,
-                client: new DiscordRPC.Unity.UnityNamedPipe(),
-                logger: new FileLogger("./discordrpc.log") { Level = LogLevel.Warning }
-            );
-
-            client.OnReady += (sender, e) => {
-                user = e.User;
-                Logger.log?.Info($"Received Ready from user {e.User.Username}");
-                menuPresence();
-            };
-
-            client.OnPresenceUpdate += (sender, e) => Logger.log?.Info($"Received Update! {e.Presence}");
-
-            client.OnError += (sender, e) => Logger.log?.Info($"Error: {e.Message}");
-
-            client.OnConnectionEstablished += (sender, e) => Logger.log?.Info("Established Connection");
-
-            client.OnConnectionFailed += (sender, e) => Logger.log?.Info("Failed Connection");
-
-            client.Initialize();
+            DiscordClient.GetUserManager().OnCurrentUserUpdate += updateUser;
 
             Logger.log?.Info("Discord RPC initalized");
 
@@ -78,44 +47,88 @@ namespace BeatSaberPresence {
 
             BS_Utils.Utilities.BSEvents.gameSceneLoaded += gamePresence;
 
+            BS_Utils.Utilities.BSEvents.songPaused += pausePresence;
+            BS_Utils.Utilities.BSEvents.songUnpaused += gamePresence;
+
             Logger.log?.Info("BS_Utils handles initalized");
+        }
+
+        private void updateUser() {
+            discordUser = DiscordClient.GetUserManager().GetCurrentUser();
+
+            setPresence();
         }
 
         private void menuPresence() {
             inGame = false;
             Logger.log?.Info("Discord RPC set to menu presence");
 
-            RichPresence richPresence = new RichPresence() {
+            Activity activity = new Activity() {
                 Details = formatRpcString(PluginConfig.Instance.MenuTopLine),
                 State = formatRpcString(PluginConfig.Instance.MenuBottomLine)
             };
 
             if (PluginConfig.Instance.ShowTimes) {
-                richPresence.Timestamps = new Timestamps() {
-                    Start = DateTime.UtcNow
+                activity.Timestamps = new ActivityTimestamps() {
+                    Start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
             }
 
             if (PluginConfig.Instance.ShowImages) {
-                richPresence.Assets = new Assets() {
-                    LargeImageKey = "beat_saber_logo",
-                    LargeImageText = PluginConfig.Instance.MenuLargeImageLine
+                activity.Assets = new ActivityAssets() {
+                    LargeImage = "beat_saber_logo",
+                    LargeText = formatRpcString(PluginConfig.Instance.MenuLargeImageLine),
                 };
-                
+
                 if (PluginConfig.Instance.ShowSmallImages) {
-                    richPresence.Assets.SmallImageKey = "beat_saber_saber";
-                    richPresence.Assets.SmallImageText = PluginConfig.Instance.MenuSmallImageLine;
+                    activity.Assets.SmallImage = "beat_saber_block";
+                    activity.Assets.SmallText = formatRpcString(PluginConfig.Instance.MenuSmallImageLine);
                 }
             }
 
-            client.SetPresence(richPresence);
+            discordInstance.UpdateActivity(activity);
+        }
+
+        private void pausePresence() {
+            inGame = true;
+            Logger.log?.Info("Discord RPC set to pause presence");
+
+            Activity activity = new Activity() {
+                Details = formatRpcString(PluginConfig.Instance.PauseTopLine),
+                State = formatRpcString(PluginConfig.Instance.PauseBottomLine),
+            };
+
+            gameplayCoreSceneSetupData = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
+
+            IDifficultyBeatmap diff = gameplayCoreSceneSetupData.difficultyBeatmap;
+            IBeatmapLevel level = diff.level;
+
+            if (PluginConfig.Instance.ShowTimes) {
+                activity.Timestamps = new ActivityTimestamps() {
+                    Start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                };
+            }
+
+            if (PluginConfig.Instance.ShowImages) {
+                activity.Assets = new ActivityAssets() {
+                    LargeImage = "beat_saber_logo",
+                    LargeText = formatRpcString(PluginConfig.Instance.PauseLargeImageLine),
+                };
+
+                if (PluginConfig.Instance.ShowSmallImages) {
+                    activity.Assets.SmallImage = "beat_saber_block";
+                    activity.Assets.SmallText = formatRpcString(PluginConfig.Instance.PauseSmallImageLine);
+                }
+            }
+
+            discordInstance.UpdateActivity(activity);
         }
 
         private void gamePresence() {
             inGame = true;
             Logger.log?.Info("Discord RPC set to game presence");
 
-            RichPresence richPresence = new RichPresence() {
+            Activity activity = new Activity() {
                 Details = formatRpcString(PluginConfig.Instance.GameTopLine),
                 State = formatRpcString(PluginConfig.Instance.GameBottomLine),
             };
@@ -126,28 +139,28 @@ namespace BeatSaberPresence {
             IBeatmapLevel level = diff.level;
 
             if (PluginConfig.Instance.ShowTimes) {
-                richPresence.Timestamps = new Timestamps() {
-                    Start = DateTime.UtcNow
+                activity.Timestamps = new ActivityTimestamps() {
+                    Start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
 
                 if (PluginConfig.Instance.InGameCountDown) {
-                    richPresence.Timestamps.End = DateTime.UtcNow.AddSeconds(level.beatmapLevelData.audioClip.length);
+                    activity.Timestamps.End = DateTimeOffset.UtcNow.AddSeconds(ATSCHolder.Instance.audioTimeSyncController.songLength - ATSCHolder.Instance.audioTimeSyncController.songTime).ToUnixTimeMilliseconds();
                 }
             }
 
             if (PluginConfig.Instance.ShowImages) {
-                richPresence.Assets = new Assets() {
-                    LargeImageKey = "beat_saber_logo",
-                    LargeImageText = PluginConfig.Instance.GameLargeImageLine
+                activity.Assets = new ActivityAssets() {
+                    LargeImage = "beat_saber_logo",
+                    LargeText = formatRpcString(PluginConfig.Instance.GameLargeImageLine),
                 };
 
                 if (PluginConfig.Instance.ShowSmallImages) {
-                    richPresence.Assets.SmallImageKey = "beat_saber_block";
-                    richPresence.Assets.SmallImageText = PluginConfig.Instance.GameSmallImageLine;
+                    activity.Assets.SmallImage = "beat_saber_block";
+                    activity.Assets.SmallText = formatRpcString(PluginConfig.Instance.GameSmallImageLine);
                 }
             }
 
-            client.SetPresence(richPresence);
+            discordInstance.UpdateActivity(activity);
         }
 
         public void setPresence() {
@@ -156,14 +169,14 @@ namespace BeatSaberPresence {
         }
 
         public void clearPresence() {
-            client.ClearPresence();
+            discordInstance.ClearActivity();
         }
 
         private string formatRpcString(string rpcString) {
             string formattedString = rpcString;
 
-            formattedString = formattedString.Replace("{DiscordName}", user.Username);
-            formattedString = formattedString.Replace("{DiscordDiscriminator}", user.Discriminator.ToString());
+            formattedString = formattedString.Replace("{DiscordName}", discordUser.Username);
+            formattedString = formattedString.Replace("{DiscordDiscriminator}", discordUser.Discriminator);
 
             if (!inGame) return formattedString;
 
@@ -201,14 +214,11 @@ namespace BeatSaberPresence {
             return formattedString;
         }
 
-        private void OnDisable() {
-            client.Dispose();
-            client = null;
-            Logger.log?.Info("Discord RPC disposed");
-        }
-
-        private void OnDestroy() {
+        public void Dispose() {
+            discordInstance.DestroyInstance();
+            discordInstance = null;
             Instance = null;
+            Logger.log?.Info("Discord RPC disposed");
         }
     }
 }

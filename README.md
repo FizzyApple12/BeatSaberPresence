@@ -46,7 +46,7 @@ Snippet | Description | Replacement Example | Works In
 ``{DiscordName}`` | Replaced with your Discord username (no discriminator) | ``FizzyApple12 (She/Her)`` | Menu or Game
 ``{DiscordDiscriminator}`` | Replaced with your Discord discriminator (no username) | ``3494`` | Menu or Game
 ``{SongName}`` | Replaced with the name of the song you are playing | ``Killbot`` | Game
-``{SongSubName}`` | Replaced with the subname of the song you are playing | ``Something or other`` | Game //
+``{SongSubName}`` | Replaced with the subname of the song you are playing | ``Something or other`` | Game
 ``{SongAuthorName}`` | Replaced with the author of the song you are playing | ``Devin Martin`` | Game
 ``{SongDuration}`` | Replaced with the length of the song you are playing in minutes and seconds | ``03:32`` | Game
 ``{SongDurationSeconds}`` | Replaced with the length of the song you are playing in seconds | ``212`` | Game
@@ -68,6 +68,15 @@ Snippet | Description | Replacement Example | Works In
 
 <br/>
 
+## What libraries or other pluginsdoes it need?
+
+This plugin is built using BSIPA4 so you need that, as well as
+ * BS Utils 1.6.1 or greater
+ * BeatSaberMarkupLanguage 1.4.0 or greater
+ * DiscordCore 1.0.3.0 or greater
+
+<br/>
+
 ## Great! How do I get it?
 
 You can either download a released version from the releases tab or build it yourself.
@@ -76,22 +85,8 @@ Here are the steps to build the Project:
 
 1. Link all of the DLLs from the Beat Saber directory
 
-2. Install the ``DiscordRichPresence`` NuGet Package
+2. Build the project
 
-3. Download ``NativeNamedPipe.dll`` from https://github.com/Lachee/unity-named-pipes/tree/master/Unity%20Package/Assets/NamedPipeClient/Plugins/x86_64 in order to allow Rich Presence to connect properly
+3. Copy ``BeatSaberPresence.dll`` to the ``Plugins`` folder
 
-4. Build the project
-
-5. Copy ``NativeNamedPipe.dll`` and ``DiscordRPC.dll`` in to the ``Libs`` folder
-
-6. Copy ``BeatSaberPresence.dll`` to the ``Plugins`` folder
-
-7. That's it! You're done!
-
-<br/>
-
-## Code Sources
-
-https://github.com/Lachee/discord-rpc-csharp (Rich Presence Library)
-
-https://github.com/Lachee/unity-named-pipes (Native Named Pipes for Unity so the Rich Presence Library doesn't heccin die)
+4. That's it! You're done!

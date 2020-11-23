@@ -11,6 +11,7 @@ using IPA.Config.Stores;
 using BeatSaberPresence.Config;
 using BeatSaberMarkupLanguage.MenuButtons;
 using BeatSaberMarkupLanguage;
+using SiraUtil.Zenject;
 
 namespace BeatSaberPresence {
     [Plugin(RuntimeOptions.DynamicInit)]
@@ -24,12 +25,18 @@ namespace BeatSaberPresence {
 
         private MenuButton menuButton;
 
+        private BeatSaberPresenceController beatSaberPresenceController;
+
         [Init]
-        public Plugin(IPALogger logger) {
+        public Plugin(IPALogger logger, Zenjector zenjector) {
             Instance = this;
 
             Logger.log = logger;
             Logger.log.Debug("Logger initialized");
+
+            zenjector.OnGame<PluginInstaller>();
+
+            beatSaberPresenceController = new BeatSaberPresenceController();
         }
 
         [Init]
@@ -45,9 +52,9 @@ namespace BeatSaberPresence {
 
         [OnEnable]
         public void OnEnable() {
-            new GameObject("BeatSaberPresenceController").AddComponent<BeatSaberPresenceController>();
-
             if (menuButton == null) menuButton = new MenuButton("BeatSaberPresence", "", SummonFlowCoordinator);
+
+            beatSaberPresenceController.Initialize();
 
             MenuButtons.instance.RegisterButton(menuButton);
         }
@@ -55,7 +62,8 @@ namespace BeatSaberPresence {
         [OnDisable]
         public void OnDisable() {
             if (menuButton != null) MenuButtons.instance.UnregisterButton(menuButton);
-            if (pluginController != null) GameObject.Destroy(pluginController);
+
+            if (beatSaberPresenceController != null) beatSaberPresenceController.Dispose();
         }
 
         [OnExit]

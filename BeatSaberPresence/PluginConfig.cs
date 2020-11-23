@@ -24,6 +24,11 @@ namespace BeatSaberPresence.Config {
         public virtual string GameLargeImageLine { get; set; } = "Beat Saber";
         public virtual string GameSmallImageLine { get; set; } = "In Game";
 
+        public virtual string PauseTopLine { get; set; } = "{SongName} - {SongAuthorName}";
+        public virtual string PauseBottomLine { get; set; } = "{Difficulty} (Paused)";
+        public virtual string PauseLargeImageLine { get; set; } = "Beat Saber";
+        public virtual string PauseSmallImageLine { get; set; } = "In Game (Paused)";
+
         public virtual void OnReload() {
             if (BeatSaberPresenceController.Instance != null) BeatSaberPresenceController.Instance.setPresence();
         }
