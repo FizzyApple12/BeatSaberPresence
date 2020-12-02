@@ -1,10 +1,12 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
 using IPA.Config.Stores;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace BeatSaberPresence.Config {
-    internal class PluginConfig {
-        public static PluginConfig Instance { get; set; }
+    internal class PluginConfig
+    {
+        internal event Action<PluginConfig> Reloaded;
 
         public virtual bool Enabled { get; set; } = true;
 
@@ -29,16 +31,9 @@ namespace BeatSaberPresence.Config {
         public virtual string PauseLargeImageLine { get; set; } = "Beat Saber";
         public virtual string PauseSmallImageLine { get; set; } = "In Game (Paused)";
 
-        public virtual void OnReload() {
-            if (BeatSaberPresenceController.Instance != null) BeatSaberPresenceController.Instance.setPresence();
-        }
-
-        public virtual void Changed() {
-            if (BeatSaberPresenceController.Instance != null) BeatSaberPresenceController.Instance.setPresence();
-        }
-
-        public virtual void CopyFrom(PluginConfig other) {
-
+        public virtual void Changed()
+        {
+            Reloaded?.Invoke(this);
         }
     }
 }

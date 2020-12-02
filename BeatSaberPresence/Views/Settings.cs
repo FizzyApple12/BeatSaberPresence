@@ -1,55 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BeatSaberMarkupLanguage;
+﻿using Zenject;
+using BeatSaberPresence.Config;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.ViewControllers;
-using BeatSaberPresence.Config;
 
-namespace BeatSaberPresence {
-    [HotReload(@"C:\Users\FizzyApple12\Desktop\BeatSaberPresence\BeatSaberPresence\Views\Settings.bsml")]
+namespace BeatSaberPresence
+{
+    [HotReload("Settings.bsml")]
     [ViewDefinition("BeatSaberPresence.Views.Settings.bsml")]
-    class Settings : BSMLAutomaticViewController {
-        [UIValue("enable")]
-        public bool enable = PluginConfig.Instance.Enabled;
+    internal class Settings : BSMLAutomaticViewController
+    {
+        private PluginConfig _pluginConfig;
+        private PresenceController _presenceController;
 
-        [UIValue("largeImage")]
-        public bool largeImage = PluginConfig.Instance.ShowImages;
-        [UIValue("smallImage")]
-        public bool smallImage = PluginConfig.Instance.ShowSmallImages;
+        [Inject]
+        protected void Construct(PluginConfig pluginConfig, PresenceController presenceController)
+        {
+            _pluginConfig = pluginConfig;
+            _presenceController = presenceController;
+        }
+
+        [UIValue("enabled")]
+        public bool Enable
+        {
+            get => _pluginConfig.Enabled;
+            set
+            {
+                _pluginConfig.Enabled = value;
+                _presenceController.ClearActivity();
+            }
+        }
+
+        [UIValue("large-image")]
+        public bool LargeImage
+        {
+            get => _pluginConfig.ShowImages;
+            set => _pluginConfig.ShowImages = value;
+        }
+
+        [UIValue("small-image")]
+        public bool SmallImage
+        {
+            get => _pluginConfig.ShowSmallImages;
+            set => _pluginConfig.ShowSmallImages = value;
+        }
 
         [UIValue("timer")]
-        public bool timer = PluginConfig.Instance.ShowTimes;
-        [UIValue("countDown")]
-        public bool countDown = PluginConfig.Instance.InGameCountDown;
-
-        [UIAction("enableChange")]
-        private void enableChange(bool newValue) {
-            PluginConfig.Instance.Enabled = newValue;
-
-            if (!newValue) BeatSaberPresenceController.Instance.clearPresence();
+        public bool Timer
+        {
+            get => _pluginConfig.ShowTimes;
+            set => _pluginConfig.ShowTimes = value;
         }
 
-        [UIAction("largeImageChange")]
-        private void imageChange(bool newValue) {
-            PluginConfig.Instance.ShowImages = newValue;
-        }
-
-        [UIAction("smallImageChange")]
-        private void smallImageChange(bool newValue) {
-            PluginConfig.Instance.ShowSmallImages = newValue;
-        }
-
-        [UIAction("timerChange")]
-        private void timerChange(bool newValue) {
-            PluginConfig.Instance.ShowTimes = newValue;
-        }
-
-        [UIAction("countDownChange")]
-        private void countDownChange(bool newValue) {
-            PluginConfig.Instance.InGameCountDown = newValue;
+        [UIValue("countdown")]
+        public bool Countdown
+        {
+            get => _pluginConfig.InGameCountDown;
+            set => _pluginConfig.InGameCountDown = value;
         }
     }
 }

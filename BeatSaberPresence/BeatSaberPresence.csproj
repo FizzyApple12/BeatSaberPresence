@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\BeatSaberModdingTools.Tasks.1.3.2\build\BeatSaberModdingTools.Tasks.props" Condition="Exists('..\packages\BeatSaberModdingTools.Tasks.1.3.2\build\BeatSaberModdingTools.Tasks.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,6 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <BeatSaberDir>$(ProjectDir)References</BeatSaberDir>
     <DebugType>portable</DebugType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +33,10 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);MSB3277</MSBuildWarningsAsMessages>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BeatmapCore, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -48,6 +55,24 @@
     <Reference Include="HMLib">
       <HintPath>References\HMLib.dll</HintPath>
     </Reference>
+    <Reference Include="Main, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <Private>False</Private>
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Build.Framework.16.5.0\lib\net472\Microsoft.Build.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Build.Tasks.Core.16.5.0\lib\net472\Microsoft.Build.Tasks.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Utilities.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Build.Utilities.Core.16.5.0\lib\net472\Microsoft.Build.Utilities.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.1.16.30\lib\net35\Microsoft.VisualStudio.Setup.Configuration.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -55,7 +80,42 @@
       <HintPath>References\SiraUtil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.Process, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.Process.4.3.0\lib\net461\System.Diagnostics.Process.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Numerics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection" />
+    <Reference Include="System.Resources.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Resources.Extensions.4.6.0\lib\netstandard2.0\System.Resources.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.9.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,10 +123,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="BS_Utils">
       <HintPath>$(BeatSaberDir)\Plugins\BS_Utils.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MainAssembly">
-      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\MainAssembly.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="HMUI">
@@ -111,21 +167,21 @@
     <Reference Include="Zenject">
       <HintPath>References\Zenject.dll</HintPath>
     </Reference>
-    <Reference Include="Zenject-Signals">
-      <HintPath>References\Zenject-Signals.dll</HintPath>
-    </Reference>
     <Reference Include="Zenject-usage">
       <HintPath>References\Zenject-usage.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ATSCHolder.cs" />
-    <Compile Include="BeatSaberPresenceController.cs" />
+    <Compile Include="GamePresenceController.cs" />
+    <Compile Include="Installers\PresenceGameInstaller.cs" />
+    <Compile Include="Installers\PresenceMenuInstaller.cs" />
+    <Compile Include="MenuButtonManager.cs" />
+    <Compile Include="MenuPresenceManager.cs" />
     <Compile Include="ModFlowCoordinator.cs" />
     <Compile Include="Plugin.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="PluginConfig.cs" />
-    <Compile Include="PluginInstaller.cs" />
+    <Compile Include="Installers\PluginInstaller.cs" />
+    <Compile Include="PresenceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Settings.cs" />
   </ItemGroup>
@@ -133,273 +189,11 @@
     <EmbeddedResource Include="manifest.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CreateJunctions.bat" />
+    <None Include="Directory.Build.props" />
+    <None Include="Directory.Build.targets" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Settings.bsml" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="References\BeatmapCore.dll" />
-    <Content Include="References\BSML.dll" />
-    <Content Include="References\HMUI.dll" />
-    <Content Include="References\MainAssembly.dll" />
-    <Content Include="References\IPA.Loader.dll" />
-    <Content Include="References\BS_Utils.dll" />
-    <Content Include="References\UnityEngine.UIModule.dll" />
-    <Content Include="References\UnityEngine.VRModule.dll" />
-    <Content Include="References\UnityEngine.UI.dll" />
-    <Content Include="References\UnityEngine.UIElementsModule.dll" />
-    <Content Include="References\UnityEngine.CoreModule.dll" />
-    <Content Include="References\UnityEngine.dll" />
-    <Content Include="References\Unity.TextMeshPro.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!--Build Targets-->
-  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(NCrunch)' != '1'">
-    <Message Text="Copying $(OutputPath)$(AssemblyName).dll to IPA\Pending\Plugins folder" Importance="high" />
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFiles="$(BeatSaberDir)\IPA\Pending\Plugins\$(AssemblyName).dll" />
-  </Target>
-  <Target Name="ZipRelease" AfterTargets="Build" Condition="'$(NCrunch' != '1' AND '$(Configuration)' == 'Release'">
-    <Message Text="Zipping plugin for release." Importance="high" />
-    <GetCommitHash ProjectDir="$(ProjectDir)">
-      <Output TaskParameter="CommitShortHash" PropertyName="CommitShortHash" />
-    </GetCommitHash>
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFiles="$(IntermediateOutputPath)zip\Plugins\$(AssemblyName).dll" />
-    <GetManifestInfo>
-      <Output TaskParameter="PluginVersion" PropertyName="PluginVersion" />
-      <Output TaskParameter="GameVersion" PropertyName="GameVersion" />
-      <Output TaskParameter="AssemblyVersion" PropertyName="AssemblyVersion" />
-    </GetManifestInfo>
-    <Message Text="PluginVersion: $(PluginVersion), AssemblyVersion: $(AssemblyVersion), GameVersion: $(GameVersion)" Importance="high" />
-    <ZipDir ZipFileName="$(OutDir)zip\$(AssemblyName)-$(PluginVersion)-bs$(GameVersion)-$(CommitShortHash).zip" DirectoryName="$(IntermediateOutputPath)zip" />
-  </Target>
-  <!--Build Tasks-->
-  <UsingTask TaskName="GetManifestInfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
-    <ParameterGroup>
-      <GameVersion ParameterType="System.String" Output="true" />
-      <PluginVersion ParameterType="System.String" Output="true" />
-      <AssemblyVersion ParameterType="System.String" Output="true" />
-    </ParameterGroup>
-    <Task>
-      <Reference Include="System.Runtime" />
-      <Reference Include="System.Dynamic.Runtime" />
-      <Reference Include="System.ObjectModel" />
-      <Using Namespace="System.IO" />
-      <Using Namespace="System.Text.RegularExpressions" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-            try
-            {
-                string manifestFile = "manifest.json";
-                string assemblyFile = "Properties\\AssemblyInfo.cs";
-                string manifest_gameVerStart = "\"gameVersion\"";
-                string manifest_versionStart = "\"version\"";
-                string manifest_gameVerLine = null;
-                string manifest_versionLine = null;
-                string startString = "[assembly: AssemblyVersion(\"";
-                string secondStartString = "[assembly: AssemblyFileVersion(\"";
-                string assemblyFileVersion = null;
-                string firstLineStr = null;
-                string endLineStr = null;
-                bool badParse = false;
-                int startLine = 1;
-                int endLine = 0;
-                int startColumn = 0;
-                int endColumn = 0;
-                if (!File.Exists(manifestFile))
-                {
-                    throw new FileNotFoundException("Could not find manifest: " + Path.GetFullPath(manifestFile));
-                }
-                if (!File.Exists(assemblyFile))
-                {
-                    throw new FileNotFoundException("Could not find AssemblyInfo: " + Path.GetFullPath(assemblyFile));
-                }
-                string line;
-                using (StreamReader manifestStream = new StreamReader(manifestFile))
-                {
-                    while ((line = manifestStream.ReadLine()) != null && (manifest_versionLine == null || manifest_gameVerLine == null))
-                    {
-                        line = line.Trim();
-                        if (line.StartsWith(manifest_gameVerStart))
-                        {
-                            manifest_gameVerLine = line;
-                        }
-                        else if (line.StartsWith(manifest_versionStart))
-                        {
-                            manifest_versionLine = line;
-                        }
-                    }
-                }
-                if (!string.IsNullOrEmpty(manifest_versionLine))
-                {
-                    PluginVersion = manifest_versionLine.Substring(manifest_versionStart.Length).Replace(":", "").Replace("\"", "").TrimEnd(',').Trim();
-                }
-                else
-                {
-                    Log.LogError("Build", "BSMOD04", "", manifestFile, 0, 0, 0, 0, "PluginVersion not found in manifest.json");
-                    PluginVersion = "E.R.R";
-                }
-
-                if (!string.IsNullOrEmpty(manifest_gameVerLine))
-                {
-                    GameVersion = manifest_gameVerLine.Substring(manifest_gameVerStart.Length).Replace(":", "").Replace("\"", "").TrimEnd(',').Trim();
-                }
-                else
-                {
-                    Log.LogError("Build", "BSMOD05", "", manifestFile, 0, 0, 0, 0, "GameVersion not found in manifest.json");
-                    GameVersion = "E.R.R";
-                }
-
-                line = null;
-                using (StreamReader assemblyStream = new StreamReader(assemblyFile))
-                {
-                    while ((line = assemblyStream.ReadLine()) != null)
-                    {
-                        if (line.Trim().StartsWith(startString))
-                        {
-                            firstLineStr = line;
-                            break;
-                        }
-                        startLine++;
-                        endLine = startLine + 1;
-                    }
-                    while ((line = assemblyStream.ReadLine()) != null)
-                    {
-                        if (line.Trim().StartsWith(secondStartString))
-                        {
-                            endLineStr = line;
-                            break;
-                        }
-                        endLine++;
-                    }
-                }
-                if (!string.IsNullOrEmpty(firstLineStr))
-                {
-                    startColumn = firstLineStr.IndexOf('"') + 1;
-                    endColumn = firstLineStr.LastIndexOf('"');
-                    if (startColumn > 0 && endColumn > 0)
-                        AssemblyVersion = firstLineStr.Substring(startColumn, endColumn - startColumn);
-                    else
-                        badParse = true;
-                }
-                else
-                    badParse = true;
-                if (badParse)
-                {
-                    Log.LogError("Build", "BSMOD03", "", assemblyFile, 0, 0, 0, 0, "Unable to parse the AssemblyVersion from {0}", assemblyFile);
-                    badParse = false;
-                }
-
-                if (PluginVersion != "E.R.R" && AssemblyVersion != PluginVersion)
-                {
-                    Log.LogError("Build", "BSMOD01", "", assemblyFile, startLine, startColumn + 1, startLine, endColumn + 1, "PluginVersion {0} in manifest.json does not match AssemblyVersion {1} in AssemblyInfo.cs", PluginVersion, AssemblyVersion, assemblyFile);
-                    Log.LogMessage(MessageImportance.High, "PluginVersion {0} does not match AssemblyVersion {1}", PluginVersion, AssemblyVersion);
-                }
-                if (!string.IsNullOrEmpty(endLineStr))
-                {
-                    startColumn = endLineStr.IndexOf('"') + 1;
-                    endColumn = endLineStr.LastIndexOf('"');
-                    if (startColumn > 0 && endColumn > 0)
-                    {
-                        assemblyFileVersion = endLineStr.Substring(startColumn, endColumn - startColumn);
-                        if (AssemblyVersion != assemblyFileVersion)
-                            Log.LogWarning("Build", "BSMOD02", "", assemblyFile, endLine, startColumn + 1, endLine, endColumn + 1, "AssemblyVersion {0} does not match AssemblyFileVersion {1} in AssemblyInfo.cs", AssemblyVersion, assemblyFileVersion);
-
-                    }
-                    else
-                    {
-                        Log.LogWarning("Build", "BSMOD06", "", assemblyFile, 0, 0, 0, 0, "Unable to parse the AssemblyFileVersion from {0}", assemblyFile);
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw;
-                Log.LogErrorFromException(ex);
-                return false;
-            }
-      ]]></Code>
-    </Task>
-  </UsingTask>
-  <!-- Source: https://stackoverflow.com/a/38127938 -->
-  <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
-    <ParameterGroup>
-      <ZipFileName ParameterType="System.String" Required="true" />
-      <DirectoryName ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Reference Include="System.IO.Compression.FileSystem" />
-      <Reference Include="System.IO" />
-      <Using Namespace="System.IO.Compression" />
-      <Using Namespace="System.IO" />
-      <Using Namespace="System.Threading" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-        try
-        {
-          var zipDir = new DirectoryInfo(Path.GetDirectoryName(Path.GetFullPath(ZipFileName)));
-          if (zipDir.Exists)
-            zipDir.Delete(true);
-          zipDir.Create();
-          zipDir.Refresh();
-          int tries = 0;
-          while(!zipDir.Exists || tries < 10) // Prevents breaking when Explorer is in the folder.
-          {
-            tries++;
-            Thread.Sleep(50);
-            zipDir.Create();
-            zipDir.Refresh();
-          }
-		  
-          if(File.Exists(ZipFileName))
-            File.Delete(ZipFileName);
-          Log.LogMessage(MessageImportance.High, "Zipping Directory \"{0}\" to \"{1}\"", DirectoryName, ZipFileName);
-          ZipFile.CreateFromDirectory( DirectoryName, ZipFileName );
-          return true;
-        }
-        catch(Exception ex)
-        {
-          Log.LogErrorFromException(ex);
-          return false;
-        }
-      ]]></Code>
-    </Task>
-  </UsingTask>
-  <UsingTask TaskName="GetCommitHash" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
-    <ParameterGroup>
-      <ProjectDir ParameterType="System.String" Required="true" />
-      <CommitShortHash ParameterType="System.String" Output="true" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System.Diagnostics" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-            CommitShortHash = "local";
-            try
-            {
-                ProjectDir = Path.GetFullPath(ProjectDir);
-                Process process = new Process();
-                string arg = "rev-parse HEAD";
-                process.StartInfo = new ProcessStartInfo("git", arg);
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.WorkingDirectory = ProjectDir;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.Start();
-                var outText = process.StandardOutput.ReadToEnd();
-                if(outText.Length >= 7)
-                  CommitShortHash = outText.Substring(0, 7);
-                else
-                  Log.LogMessage(MessageImportance.High, "Unable to retrieve current commit hash.");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.LogErrorFromException(ex);
-                return true;
-            }
-      ]]></Code>
-    </Task>
-  </UsingTask>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>
