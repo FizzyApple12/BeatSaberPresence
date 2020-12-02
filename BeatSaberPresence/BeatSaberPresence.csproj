@@ -121,10 +121,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="BS_Utils">
-      <HintPath>$(BeatSaberDir)\Plugins\BS_Utils.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="HMUI">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMUI.dll</HintPath>
       <Private>False</Private>

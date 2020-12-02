@@ -11,7 +11,7 @@ namespace BeatSaberPresence
     [Plugin(RuntimeOptions.DynamicInit)]
     public class Plugin
     {
-        internal static string Name => "Beat Saber Presence";
+        internal const string Name = "Beat Saber Presence";
 
         [Init]
         public Plugin(Conf conf, IPALogger logger, Zenjector zenjector)

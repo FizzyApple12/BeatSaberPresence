@@ -2,6 +2,7 @@
 using Discord;
 using Zenject;
 using BeatSaberPresence.Config;
+using SiraUtil.Services;
 
 namespace BeatSaberPresence
 {
@@ -11,14 +12,16 @@ namespace BeatSaberPresence
         private Activity? _pauseActivity;
 
         private readonly IGamePause _gamePause;
+        private readonly Submission _submission;
         private readonly PluginConfig _pluginConfig;
         private readonly PresenceController _presenceController;
         private readonly AudioTimeSyncController _audioTimeSyncController;
         private readonly GameplayCoreSceneSetupData _gameplayCoreSceneSetupData;
 
-        internal GamePresenceManager([InjectOptional] IGamePause gamePause, PluginConfig pluginConfig, PresenceController presenceController, AudioTimeSyncController audioTimeSyncController, GameplayCoreSceneSetupData gameplayCoreSceneSetupData)
+        internal GamePresenceManager([InjectOptional] IGamePause gamePause, [InjectOptional] Submission submission, PluginConfig pluginConfig, PresenceController presenceController, AudioTimeSyncController audioTimeSyncController, GameplayCoreSceneSetupData gameplayCoreSceneSetupData)
         {
             _gamePause = gamePause;
+            _submission = submission;
             _pluginConfig = pluginConfig;
             _presenceController = presenceController;
             _audioTimeSyncController = audioTimeSyncController;
@@ -149,7 +152,8 @@ namespace BeatSaberPresence
             formattedString = formattedString.Replace("{SongBPM}", level.beatsPerMinute.ToString());
             formattedString = formattedString.Replace("{LevelID}", level.levelID);
             formattedString = formattedString.Replace("{EnvironmentName}", level.environmentInfo.environmentName);
-            formattedString = formattedString.Replace("{Submission}", (BS_Utils.Gameplay.ScoreSubmission.Disabled) ? "Disabled" : "Enabled");
+            formattedString = formattedString.Replace("{Submission}", _submission != null ? (_submission.Tickets().Length == 0) ? "Disabled" : "Enabled" : "Disabled");
+
 
             formattedString = formattedString.Replace("{NoFail}", (gameplayModifiers.noFail) ? "On" : "Off");
             formattedString = formattedString.Replace("{NoBombs}", (gameplayModifiers.noBombs) ? "On" : "Off");
