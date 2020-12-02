@@ -1,26 +1,34 @@
 ﻿using HMUI;
+using Zenject;
 using BeatSaberMarkupLanguage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BeatSaberPresence {
-    class ModFlowCoordinator : FlowCoordinator {
-        private Settings settings;
-        protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling) {
-            if (firstActivation) {
-                SetTitle("BeatSaberPresence");
-                showBackButton = true;
-            }
+namespace BeatSaberPresence
+{
+    class ModFlowCoordinator : FlowCoordinator
+    {
+        private Settings _settings;
+        private MainFlowCoordinator _mainFlowCoordinator;
 
-            settings = BeatSaberUI.CreateViewController<Settings>();
-            ProvideInitialViewControllers(settings);
+        [Inject]
+        public void Construct(Settings settings, MainFlowCoordinator mainFlowCoordinator)
+        {
+            _settings = settings;
+            _mainFlowCoordinator = mainFlowCoordinator;
         }
 
-        protected override void BackButtonWasPressed(ViewController topViewController) {
-            BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this);
+        protected override void DidActivate(bool firstActivation, bool _, bool __)
+        {
+            if (firstActivation)
+            {
+                SetTitle(Plugin.Name);
+                showBackButton = true;
+            }
+            ProvideInitialViewControllers(_settings);
+        }
+
+        protected override void BackButtonWasPressed(ViewController _)
+        {
+            _mainFlowCoordinator.DismissFlowCoordinator(this);
         }
     }
 }
