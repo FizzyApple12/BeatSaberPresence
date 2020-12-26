@@ -190,6 +190,30 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Settings.bsml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="References\Main.dll" />
+    <Content Include="References\BeatmapCore.dll" />
+    <Content Include="References\BSML.dll" />
+    <Content Include="References\BS_Utils.dll" />
+    <Content Include="References\DiscordCore.dll" />
+    <Content Include="References\GameplayCore.dll" />
+    <Content Include="References\HMLib.dll" />
+    <Content Include="References\HMUI.dll" />
+    <Content Include="References\IPA.Loader.dll" />
+    <Content Include="References\IPA\Pending\Plugins\BeatSaberPresence.dll" />
+    <Content Include="References\MainAssembly.dll" />
+    <Content Include="References\SiraUtil.dll" />
+    <Content Include="References\Unity.TextMeshPro.dll" />
+    <Content Include="References\UnityEngine.AudioModule.dll" />
+    <Content Include="References\UnityEngine.CoreModule.dll" />
+    <Content Include="References\UnityEngine.dll" />
+    <Content Include="References\UnityEngine.UI.dll" />
+    <Content Include="References\UnityEngine.UIElementsModule.dll" />
+    <Content Include="References\UnityEngine.UIModule.dll" />
+    <Content Include="References\UnityEngine.VRModule.dll" />
+    <Content Include="References\Zenject-Signals.dll" />
+    <Content Include="References\Zenject-usage.dll" />
+    <Content Include="References\Zenject.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
