@@ -72,12 +72,12 @@ Snippet | Description | Replacement Example | Works In
 
 <br/>
 
-## What libraries or other pluginsdoes it need?
+## What libraries or other plugins does it need?
 
 This plugin is built using BSIPA4 so you need that, as well as
- * SiraUtil 2.3.0 or greater
+ * SiraUtil 2.3.1 or greater
  * BeatSaberMarkupLanguage 1.4.2 or greater
- * DiscordCore 1.0.3.0 or greater
+ * DiscordCore 1.0.3 or greater
 
 <br/>
 

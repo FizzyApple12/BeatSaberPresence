@@ -4,10 +4,8 @@ using Zenject;
 using BeatSaberPresence.Config;
 using SiraUtil.Services;
 
-namespace BeatSaberPresence
-{
-    internal class GamePresenceManager : IInitializable, ILateDisposable
-    {
+namespace BeatSaberPresence {
+    internal class GamePresenceManager : IInitializable, ILateDisposable {
         private Activity? _gameActivity;
         private Activity? _pauseActivity;
 
@@ -18,8 +16,7 @@ namespace BeatSaberPresence
         private readonly AudioTimeSyncController _audioTimeSyncController;
         private readonly GameplayCoreSceneSetupData _gameplayCoreSceneSetupData;
 
-        internal GamePresenceManager([InjectOptional] IGamePause gamePause, [InjectOptional] Submission submission, PluginConfig pluginConfig, PresenceController presenceController, AudioTimeSyncController audioTimeSyncController, GameplayCoreSceneSetupData gameplayCoreSceneSetupData)
-        {
+        internal GamePresenceManager([InjectOptional] IGamePause gamePause, [InjectOptional] Submission submission, PluginConfig pluginConfig, PresenceController presenceController, AudioTimeSyncController audioTimeSyncController, GameplayCoreSceneSetupData gameplayCoreSceneSetupData) {
             _gamePause = gamePause;
             _submission = submission;
             _pluginConfig = pluginConfig;
@@ -28,10 +25,8 @@ namespace BeatSaberPresence
             _gameplayCoreSceneSetupData = gameplayCoreSceneSetupData;
         }
 
-        public void Initialize()
-        {
-            if (_gamePause != null)
-            {
+        public void Initialize() {
+            if (_gamePause != null) {
                 _gamePause.didPauseEvent += DidPause;
                 _gamePause.didResumeEvent += DidResume;
             }
@@ -39,52 +34,37 @@ namespace BeatSaberPresence
             DidResume();
         }
 
-        private void DidPause()
-        {
+        private void DidPause() {
             Set(true);
         }
 
-        private void DidResume()
-        {
+        private void DidResume() {
             Set(false);
         }
 
-        public void LateDispose()
-        {
-            if (_gamePause != null)
-            {
+        public void LateDispose() {
+            if (_gamePause != null) {
                 _gamePause.didPauseEvent -= DidPause;
                 _gamePause.didResumeEvent -= DidResume;
             }
             _pluginConfig.Reloaded -= ConfigReloaded;
         }
 
-        private void ConfigReloaded(PluginConfig _)
-        {
+        private void ConfigReloaded(PluginConfig _) {
             _gameActivity = RebuildActivity();
             _pauseActivity = RebuildActivity(true);
             Set();
         }
 
-        private void Set(bool isPaused = false)
-        {
-            if (isPaused)
-            {
-                if (!_pauseActivity.HasValue)
-                {
-                    _pauseActivity = RebuildActivity(true);
-                }
-                _presenceController.SetActivity(_pauseActivity.Value);
-            }
-            else
-            {
-                if (!_gameActivity.HasValue)
-                {
-                    _gameActivity = RebuildActivity(false);
-                }
+        private void Set(bool isPaused = false) {
+            if (isPaused) {
+                if (!_pauseActivity.HasValue) _pauseActivity = RebuildActivity(true);
 
-                if (_pluginConfig.InGameCountDown)
-                {
+                _presenceController.SetActivity(_pauseActivity.Value);
+            } else {
+                if (!_gameActivity.HasValue) _gameActivity = RebuildActivity(false);
+
+                if (_pluginConfig.InGameCountDown) {
                     Activity activity = _gameActivity.Value;
                     ActivityTimestamps timestamps = _gameActivity.Value.Timestamps;
                     timestamps.End = DateTimeOffset.UtcNow.AddSeconds(_audioTimeSyncController.songLength - _audioTimeSyncController.songTime).ToUnixTimeMilliseconds();
@@ -95,32 +75,25 @@ namespace BeatSaberPresence
             }
         }
 
-        private Activity RebuildActivity(bool paused = false)
-        {
-            Activity activity = new Activity
-            {
+        private Activity RebuildActivity(bool paused = false) {
+            Activity activity = new Activity {
                 Details = Format(paused ? _pluginConfig.PauseTopLine : _pluginConfig.GameTopLine),
                 State = Format(paused ? _pluginConfig.PauseBottomLine : _pluginConfig.GameBottomLine),
             };
-            
-            if (_pluginConfig.ShowTimes)
-            {
-                activity.Timestamps = new ActivityTimestamps
-                {
+
+            if (_pluginConfig.ShowTimes) {
+                activity.Timestamps = new ActivityTimestamps {
                     Start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
             }
 
-            if (_pluginConfig.ShowImages)
-            {
-                activity.Assets = new ActivityAssets
-                {
+            if (_pluginConfig.ShowImages) {
+                activity.Assets = new ActivityAssets {
                     LargeImage = "beat_saber_logo",
                     LargeText = Format(paused ? _pluginConfig.PauseLargeImageLine : _pluginConfig.GameLargeImageLine)
                 };
 
-                if (_pluginConfig.ShowSmallImages)
-                {
+                if (_pluginConfig.ShowSmallImages) {
                     activity.Assets.SmallImage = "beat_saber_block";
                     activity.Assets.SmallText = Format(paused ? _pluginConfig.PauseSmallImageLine : _pluginConfig.GameSmallImageLine);
                 }
@@ -129,18 +102,17 @@ namespace BeatSaberPresence
             return activity;
         }
 
-        private string Format(string rpcString)
-        {
+        private string Format(string rpcString) {
             string formattedString = rpcString;
 
-            formattedString = formattedString.Replace("{DiscordName}", _presenceController.User.Username);
-            formattedString = formattedString.Replace("{DiscordDiscriminator}", _presenceController.User.Discriminator);
+            if (_presenceController.User != null) formattedString = formattedString.Replace("{DiscordName}", _presenceController.User.Value.Username);
+            if (_presenceController.User != null) formattedString = formattedString.Replace("{DiscordDiscriminator}", _presenceController.User.Value.Discriminator);
 
             IDifficultyBeatmap diff = _gameplayCoreSceneSetupData.difficultyBeatmap;
             GameplayModifiers gameplayModifiers = _gameplayCoreSceneSetupData.gameplayModifiers;
             IBeatmapLevel level = diff.level;
 
-            TimeSpan totalTime = new TimeSpan(0, 0, (int)Math.Floor(level.beatmapLevelData.audioClip.length));
+            TimeSpan totalTime = new TimeSpan(0, 0, (int) Math.Floor(level.beatmapLevelData.audioClip.length));
 
             formattedString = formattedString.Replace("{SongName}", level.songName);
             formattedString = formattedString.Replace("{SongSubName}", level.songSubName);

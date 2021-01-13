@@ -6,16 +6,13 @@ using BeatSaberPresence.Config;
 using BeatSaberPresence.Installers;
 using IPALogger = IPA.Logging.Logger;
 
-namespace BeatSaberPresence
-{
+namespace BeatSaberPresence {
     [Plugin(RuntimeOptions.DynamicInit)]
-    public class Plugin
-    {
+    public class Plugin {
         internal const string Name = "Beat Saber Presence";
 
         [Init]
-        public Plugin(Conf conf, IPALogger logger, Zenjector zenjector)
-        {
+        public Plugin(Conf conf, IPALogger logger, Zenjector zenjector) {
             zenjector.OnApp<PluginInstaller>().WithParameters(logger, conf.Generated<PluginConfig>());
             zenjector.OnGame<PresenceGameInstaller>(false);
             zenjector.OnMenu<PresenceMenuInstaller>();

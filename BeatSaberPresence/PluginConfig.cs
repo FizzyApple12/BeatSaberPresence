@@ -4,8 +4,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace BeatSaberPresence.Config {
-    internal class PluginConfig
-    {
+    internal class PluginConfig {
         internal event Action<PluginConfig> Reloaded;
 
         public virtual bool Enabled { get; set; } = true;
@@ -31,8 +30,7 @@ namespace BeatSaberPresence.Config {
         public virtual string PauseLargeImageLine { get; set; } = "Beat Saber";
         public virtual string PauseSmallImageLine { get; set; } = "In Game (Paused)";
 
-        public virtual void Changed()
-        {
+        public virtual void Changed() {
             Reloaded?.Invoke(this);
         }
     }
