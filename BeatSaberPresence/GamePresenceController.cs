@@ -127,7 +127,7 @@ namespace BeatSaberPresence {
             formattedString = formattedString.Replace("{Submission}", _submission != null ? (_submission.Tickets().Length == 0) ? "Disabled" : "Enabled" : "Disabled");
 
 
-            formattedString = formattedString.Replace("{NoFail}", (gameplayModifiers.noFail) ? "On" : "Off");
+            formattedString = formattedString.Replace("{NoFail}", (gameplayModifiers.noFailOn0Energy) ? "On" : "Off");
             formattedString = formattedString.Replace("{NoBombs}", (gameplayModifiers.noBombs) ? "On" : "Off");
             formattedString = formattedString.Replace("{NoObsticles}", (gameplayModifiers.enabledObstacleType == GameplayModifiers.EnabledObstacleType.NoObstacles) ? "On" : "Off");
             formattedString = formattedString.Replace("{NoArrows}", (gameplayModifiers.noArrows) ? "On" : "Off");
