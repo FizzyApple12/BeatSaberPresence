@@ -7,19 +7,19 @@ namespace BeatSaberPresence.Installers
 {
     internal class PluginInstaller : Installer<Logger, PluginConfig, PluginInstaller>
     {
-        private readonly Logger _logger;
-        private readonly PluginConfig _pluginConfig;
+        private readonly Logger logger;
+        private readonly PluginConfig pluginConfig;
 
         internal PluginInstaller(Logger logger, PluginConfig pluginConfig)
         {
-            _logger = logger;
-            _pluginConfig = pluginConfig;
+            this.logger = logger;
+            this.pluginConfig = pluginConfig;
         }
 
         public override void InstallBindings()
         {
-            Container.BindInstance(_pluginConfig);
-            Container.BindLoggerAsSiraLogger(_logger);
+            Container.BindInstance(pluginConfig);
+            Container.BindLoggerAsSiraLogger(logger);
             Container.BindInterfacesAndSelfTo<PresenceController>().AsSingle();
         }
     }

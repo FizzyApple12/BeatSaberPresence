@@ -6,31 +6,31 @@ using SiraUtil.Services;
 
 namespace BeatSaberPresence {
     internal class GamePresenceManager : IInitializable, ILateDisposable {
-        private Activity? _gameActivity;
-        private Activity? _pauseActivity;
+        private Activity? gameActivity;
+        private Activity? pauseActivity;
 
-        private readonly IGamePause _gamePause;
-        private readonly Submission _submission;
-        private readonly PluginConfig _pluginConfig;
-        private readonly PresenceController _presenceController;
-        private readonly AudioTimeSyncController _audioTimeSyncController;
-        private readonly GameplayCoreSceneSetupData _gameplayCoreSceneSetupData;
+        private readonly IGamePause gamePause;
+        private readonly Submission submission;
+        private readonly PluginConfig pluginConfig;
+        private readonly PresenceController presenceController;
+        private readonly AudioTimeSyncController audioTimeSyncController;
+        private readonly GameplayCoreSceneSetupData gameplayCoreSceneSetupData;
 
         internal GamePresenceManager([InjectOptional] IGamePause gamePause, [InjectOptional] Submission submission, PluginConfig pluginConfig, PresenceController presenceController, AudioTimeSyncController audioTimeSyncController, GameplayCoreSceneSetupData gameplayCoreSceneSetupData) {
-            _gamePause = gamePause;
-            _submission = submission;
-            _pluginConfig = pluginConfig;
-            _presenceController = presenceController;
-            _audioTimeSyncController = audioTimeSyncController;
-            _gameplayCoreSceneSetupData = gameplayCoreSceneSetupData;
+            this.gamePause = gamePause;
+            this.submission = submission;
+            this.pluginConfig = pluginConfig;
+            this.presenceController = presenceController;
+            this.audioTimeSyncController = audioTimeSyncController;
+            this.gameplayCoreSceneSetupData = gameplayCoreSceneSetupData;
         }
 
         public void Initialize() {
-            if (_gamePause != null) {
-                _gamePause.didPauseEvent += DidPause;
-                _gamePause.didResumeEvent += DidResume;
+            if (gamePause != null) {
+                gamePause.didPauseEvent += DidPause;
+                gamePause.didResumeEvent += DidResume;
             }
-            _pluginConfig.Reloaded += ConfigReloaded;
+            pluginConfig.Reloaded += ConfigReloaded;
             DidResume();
         }
 
@@ -43,59 +43,59 @@ namespace BeatSaberPresence {
         }
 
         public void LateDispose() {
-            if (_gamePause != null) {
-                _gamePause.didPauseEvent -= DidPause;
-                _gamePause.didResumeEvent -= DidResume;
+            if (gamePause != null) {
+                gamePause.didPauseEvent -= DidPause;
+                gamePause.didResumeEvent -= DidResume;
             }
-            _pluginConfig.Reloaded -= ConfigReloaded;
+            pluginConfig.Reloaded -= ConfigReloaded;
         }
 
         private void ConfigReloaded(PluginConfig _) {
-            _gameActivity = RebuildActivity();
-            _pauseActivity = RebuildActivity(true);
+            gameActivity = RebuildActivity();
+            pauseActivity = RebuildActivity(true);
             Set();
         }
 
         private void Set(bool isPaused = false) {
             if (isPaused) {
-                if (!_pauseActivity.HasValue) _pauseActivity = RebuildActivity(true);
+                if (!pauseActivity.HasValue) pauseActivity = RebuildActivity(true);
 
-                _presenceController.SetActivity(_pauseActivity.Value);
+                presenceController.SetActivity(pauseActivity.Value);
             } else {
-                if (!_gameActivity.HasValue) _gameActivity = RebuildActivity(false);
+                if (!gameActivity.HasValue) gameActivity = RebuildActivity(false);
 
-                if (_pluginConfig.InGameCountDown) {
-                    Activity activity = _gameActivity.Value;
-                    ActivityTimestamps timestamps = _gameActivity.Value.Timestamps;
-                    timestamps.End = DateTimeOffset.UtcNow.AddSeconds(_audioTimeSyncController.songLength - _audioTimeSyncController.songTime).ToUnixTimeMilliseconds();
+                if (pluginConfig.InGameCountDown) {
+                    Activity activity = gameActivity.Value;
+                    ActivityTimestamps timestamps = gameActivity.Value.Timestamps;
+                    timestamps.End = DateTimeOffset.UtcNow.AddSeconds(audioTimeSyncController.songLength - audioTimeSyncController.songTime).ToUnixTimeMilliseconds();
                     activity.Timestamps = timestamps;
-                    _gameActivity = activity;
+                    gameActivity = activity;
                 }
-                _presenceController.SetActivity(_gameActivity.Value);
+                presenceController.SetActivity(gameActivity.Value);
             }
         }
 
         private Activity RebuildActivity(bool paused = false) {
             Activity activity = new Activity {
-                Details = Format(paused ? _pluginConfig.PauseTopLine : _pluginConfig.GameTopLine),
-                State = Format(paused ? _pluginConfig.PauseBottomLine : _pluginConfig.GameBottomLine),
+                Details = Format(paused ? pluginConfig.PauseTopLine : pluginConfig.GameTopLine),
+                State = Format(paused ? pluginConfig.PauseBottomLine : pluginConfig.GameBottomLine),
             };
 
-            if (_pluginConfig.ShowTimes) {
+            if (pluginConfig.ShowTimes) {
                 activity.Timestamps = new ActivityTimestamps {
                     Start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
                 };
             }
 
-            if (_pluginConfig.ShowImages) {
+            if (pluginConfig.ShowImages) {
                 activity.Assets = new ActivityAssets {
                     LargeImage = "beat_saber_logo",
-                    LargeText = Format(paused ? _pluginConfig.PauseLargeImageLine : _pluginConfig.GameLargeImageLine)
+                    LargeText = Format(paused ? pluginConfig.PauseLargeImageLine : pluginConfig.GameLargeImageLine)
                 };
 
-                if (_pluginConfig.ShowSmallImages) {
+                if (pluginConfig.ShowSmallImages) {
                     activity.Assets.SmallImage = "beat_saber_block";
-                    activity.Assets.SmallText = Format(paused ? _pluginConfig.PauseSmallImageLine : _pluginConfig.GameSmallImageLine);
+                    activity.Assets.SmallText = Format(paused ? pluginConfig.PauseSmallImageLine : pluginConfig.GameSmallImageLine);
                 }
             }
 
@@ -105,11 +105,11 @@ namespace BeatSaberPresence {
         private string Format(string rpcString) {
             string formattedString = rpcString;
 
-            if (_presenceController.User != null) formattedString = formattedString.Replace("{DiscordName}", _presenceController.User.Value.Username);
-            if (_presenceController.User != null) formattedString = formattedString.Replace("{DiscordDiscriminator}", _presenceController.User.Value.Discriminator);
+            if (presenceController.User != null) formattedString = formattedString.Replace("{DiscordName}", presenceController.User.Value.Username);
+            if (presenceController.User != null) formattedString = formattedString.Replace("{DiscordDiscriminator}", presenceController.User.Value.Discriminator);
 
-            IDifficultyBeatmap diff = _gameplayCoreSceneSetupData.difficultyBeatmap;
-            GameplayModifiers gameplayModifiers = _gameplayCoreSceneSetupData.gameplayModifiers;
+            IDifficultyBeatmap diff = gameplayCoreSceneSetupData.difficultyBeatmap;
+            GameplayModifiers gameplayModifiers = gameplayCoreSceneSetupData.gameplayModifiers;
             IBeatmapLevel level = diff.level;
 
             TimeSpan totalTime = new TimeSpan(0, 0, (int) Math.Floor(level.beatmapLevelData.audioClip.length));
@@ -124,7 +124,7 @@ namespace BeatSaberPresence {
             formattedString = formattedString.Replace("{SongBPM}", level.beatsPerMinute.ToString());
             formattedString = formattedString.Replace("{LevelID}", level.levelID);
             formattedString = formattedString.Replace("{EnvironmentName}", level.environmentInfo.environmentName);
-            formattedString = formattedString.Replace("{Submission}", _submission != null ? (_submission.Tickets().Length == 0) ? "Disabled" : "Enabled" : "Disabled");
+            formattedString = formattedString.Replace("{Submission}", submission != null ? (submission.Tickets().Length == 0) ? "Disabled" : "Enabled" : "Disabled");
 
 
             formattedString = formattedString.Replace("{NoFail}", (gameplayModifiers.noFailOn0Energy) ? "On" : "Off");

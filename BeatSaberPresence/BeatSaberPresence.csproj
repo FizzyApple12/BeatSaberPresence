@@ -194,7 +194,6 @@
     <Content Include="References\Main.dll" />
     <Content Include="References\BeatmapCore.dll" />
     <Content Include="References\BSML.dll" />
-    <Content Include="References\BS_Utils.dll" />
     <Content Include="References\DiscordCore.dll" />
     <Content Include="References\GameplayCore.dll" />
     <Content Include="References\HMLib.dll" />

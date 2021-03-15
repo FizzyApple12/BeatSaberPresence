@@ -7,46 +7,46 @@ namespace BeatSaberPresence {
     [HotReload("Settings.bsml")]
     [ViewDefinition("BeatSaberPresence.Views.Settings.bsml")]
     internal class Settings : BSMLAutomaticViewController {
-        private PluginConfig _pluginConfig;
-        private PresenceController _presenceController;
+        private PluginConfig pluginConfig;
+        private PresenceController presenceController;
 
         [Inject]
         protected void Construct(PluginConfig pluginConfig, PresenceController presenceController) {
-            _pluginConfig = pluginConfig;
-            _presenceController = presenceController;
+            this.pluginConfig = pluginConfig;
+            this.presenceController = presenceController;
         }
 
         [UIValue("enabled")]
         public bool Enable {
-            get => _pluginConfig.Enabled;
+            get => pluginConfig.Enabled;
             set {
-                _pluginConfig.Enabled = value;
-                _presenceController.ClearActivity();
+                pluginConfig.Enabled = value;
+                presenceController.ClearActivity();
             }
         }
 
         [UIValue("large-image")]
         public bool LargeImage {
-            get => _pluginConfig.ShowImages;
-            set => _pluginConfig.ShowImages = value;
+            get => pluginConfig.ShowImages;
+            set => pluginConfig.ShowImages = value;
         }
 
         [UIValue("small-image")]
         public bool SmallImage {
-            get => _pluginConfig.ShowSmallImages;
-            set => _pluginConfig.ShowSmallImages = value;
+            get => pluginConfig.ShowSmallImages;
+            set => pluginConfig.ShowSmallImages = value;
         }
 
         [UIValue("timer")]
         public bool Timer {
-            get => _pluginConfig.ShowTimes;
-            set => _pluginConfig.ShowTimes = value;
+            get => pluginConfig.ShowTimes;
+            set => pluginConfig.ShowTimes = value;
         }
 
         [UIValue("countdown")]
         public bool Countdown {
-            get => _pluginConfig.InGameCountDown;
-            set => _pluginConfig.InGameCountDown = value;
+            get => pluginConfig.InGameCountDown;
+            set => pluginConfig.InGameCountDown = value;
         }
     }
 }

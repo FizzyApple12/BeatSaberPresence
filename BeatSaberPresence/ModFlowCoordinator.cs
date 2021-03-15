@@ -4,13 +4,13 @@ using BeatSaberMarkupLanguage;
 
 namespace BeatSaberPresence {
     class ModFlowCoordinator : FlowCoordinator {
-        private Settings _settings;
-        private MainFlowCoordinator _mainFlowCoordinator;
+        private Settings settings;
+        private MainFlowCoordinator mainFlowCoordinator;
 
         [Inject]
         public void Construct(Settings settings, MainFlowCoordinator mainFlowCoordinator) {
-            _settings = settings;
-            _mainFlowCoordinator = mainFlowCoordinator;
+            this.settings = settings;
+            this.mainFlowCoordinator = mainFlowCoordinator;
         }
 
         protected override void DidActivate(bool firstActivation, bool _, bool __) {
@@ -18,11 +18,11 @@ namespace BeatSaberPresence {
                 SetTitle(Plugin.Name);
                 showBackButton = true;
             }
-            ProvideInitialViewControllers(_settings);
+            ProvideInitialViewControllers(settings);
         }
 
         protected override void BackButtonWasPressed(ViewController _) {
-            _mainFlowCoordinator.DismissFlowCoordinator(this);
+            mainFlowCoordinator.DismissFlowCoordinator(this);
         }
     }
 }

@@ -5,26 +5,26 @@ using BeatSaberMarkupLanguage.MenuButtons;
 
 namespace BeatSaberPresence {
     internal class MenuButtonManager : IInitializable, IDisposable {
-        private readonly MenuButton _menuButton;
-        private readonly ModFlowCoordinator _modFlowCoordinator;
-        private readonly MainFlowCoordinator _mainFlowCoordinator;
+        private readonly MenuButton menuButton;
+        private readonly ModFlowCoordinator modFlowCoordinator;
+        private readonly MainFlowCoordinator mainFlowCoordinator;
 
         internal MenuButtonManager(ModFlowCoordinator modFlowCoordinator, MainFlowCoordinator mainFlowCoordinator) {
-            _modFlowCoordinator = modFlowCoordinator;
-            _mainFlowCoordinator = mainFlowCoordinator;
-            _menuButton = new MenuButton("BeatSaberPresence", "", SummonFlowCoordinator);
+            this.modFlowCoordinator = modFlowCoordinator;
+            this.mainFlowCoordinator = mainFlowCoordinator;
+            menuButton = new MenuButton("BeatSaberPresence", "", SummonFlowCoordinator);
         }
 
         public void Initialize() {
-            MenuButtons.instance.RegisterButton(_menuButton);
+            MenuButtons.instance.RegisterButton(menuButton);
         }
 
         public void Dispose() {
-            if (MenuButtons.IsSingletonAvailable && BSMLParser.IsSingletonAvailable) MenuButtons.instance.UnregisterButton(_menuButton);
+            if (MenuButtons.IsSingletonAvailable && BSMLParser.IsSingletonAvailable) MenuButtons.instance.UnregisterButton(menuButton);
         }
 
         private void SummonFlowCoordinator() {
-            _mainFlowCoordinator.PresentFlowCoordinator(_modFlowCoordinator);
+            mainFlowCoordinator.PresentFlowCoordinator(modFlowCoordinator);
         }
     }
 }

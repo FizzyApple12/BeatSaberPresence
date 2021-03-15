@@ -3,13 +3,13 @@
   "id": "BeatSaberPresence",
   "name": "BeatSaberPresence",
   "author": "FizzyApple12",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Discord Rich Presence for Beat Saber",
-  "gameVersion": "1.13.2",
+  "gameVersion": "1.13.5",
   "dependsOn": {
-    "BSIPA": "^4.1.4",
-    "SiraUtil": "^2.4.0",
+    "BSIPA": "^4.1.6",
+    "SiraUtil": "^2.5.2",
     "DiscordCore": "^1.0.4",
-    "BeatSaberMarkupLanguage": "^1.4.5"
+    "BeatSaberMarkupLanguage": "^1.5.1"
   }
 }

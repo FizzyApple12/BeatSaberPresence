@@ -7,10 +7,10 @@ using BeatSaberPresence.Config;
 
 namespace BeatSaberPresence {
     internal class PresenceController : IInitializable, IDisposable {
-        private readonly SiraLog _siraLog;
-        private readonly UserManager _userManager;
-        private readonly PluginConfig _pluginConfig;
-        private readonly DiscordInstance _discordInstance;
+        private readonly SiraLog siraLog;
+        private readonly UserManager userManager;
+        private readonly PluginConfig pluginConfig;
+        private readonly DiscordInstance discordInstance;
         internal const long clientID = 708741346403287113;
 
         private bool didInstantiateUserManagerProperly = true;
@@ -18,41 +18,41 @@ namespace BeatSaberPresence {
         public Nullable<User> User { get; private set; } = null;
 
         internal PresenceController(SiraLog siraLog, PluginConfig pluginConfig) {
-            _siraLog = siraLog;
-            _pluginConfig = pluginConfig;
-            _discordInstance = DiscordManager.instance.CreateInstance(new DiscordSettings {
+            this.siraLog = siraLog;
+            this.pluginConfig = pluginConfig;
+            this.discordInstance = DiscordManager.instance.CreateInstance(new DiscordSettings {
                 appId = clientID,
                 handleInvites = false,
                 modId = nameof(BeatSaberPresence),
                 modName = nameof(BeatSaberPresence),
             });
-            _userManager = DiscordClient.GetUserManager();
+            this.userManager = DiscordClient.GetUserManager();
 
-            if (_userManager == null) didInstantiateUserManagerProperly = false;
+            if (this.userManager == null) didInstantiateUserManagerProperly = false;
         }
 
         public void Initialize() {
-            _siraLog.Debug("Initializing Presence Controller");
-            if (didInstantiateUserManagerProperly) _userManager.OnCurrentUserUpdate += CurrentUserUpdated;
+            siraLog.Debug("Initializing Presence Controller");
+            if (didInstantiateUserManagerProperly) userManager.OnCurrentUserUpdate += CurrentUserUpdated;
         }
 
         private void CurrentUserUpdated() {
-            if (didInstantiateUserManagerProperly) User = _userManager.GetCurrentUser();
+            if (didInstantiateUserManagerProperly) User = userManager.GetCurrentUser();
         }
 
         internal void SetActivity(Activity activity) {
-            _discordInstance.ClearActivity();
-            if (!_pluginConfig.Enabled) return;
-            _discordInstance.UpdateActivity(activity);
+            discordInstance.ClearActivity();
+            if (!pluginConfig.Enabled) return;
+            discordInstance.UpdateActivity(activity);
         }
 
         public void Dispose() {
-            if (DiscordManager.IsSingletonAvailable && DiscordCore.UI.Settings.IsSingletonAvailable) _discordInstance.DestroyInstance();
-            if (didInstantiateUserManagerProperly) _userManager.OnCurrentUserUpdate -= CurrentUserUpdated;
+            if (DiscordManager.IsSingletonAvailable && DiscordCore.UI.Settings.IsSingletonAvailable) discordInstance.DestroyInstance();
+            if (didInstantiateUserManagerProperly) userManager.OnCurrentUserUpdate -= CurrentUserUpdated;
         }
 
         internal void ClearActivity() {
-            _discordInstance.ClearActivity();
+            discordInstance.ClearActivity();
         }
     }
 }
