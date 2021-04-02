@@ -75,9 +75,9 @@ Snippet | Description | Replacement Example | Works In
 ## What libraries or other plugins does it need?
 
 This plugin is built using BSIPA4 so you need that, as well as
- * SiraUtil 2.5.2 or greater
- * BeatSaberMarkupLanguage 1.5.1 or greater
- * DiscordCore 1.0.4 or greater
+ * SiraUtil
+ * BeatSaberMarkupLanguage
+ * DiscordCore
 
 <br/>
 
