@@ -2,7 +2,7 @@
 using Discord;
 using Zenject;
 using BeatSaberPresence.Config;
-using SiraUtil.Services;
+using SiraUtil.Submissions;
 
 namespace BeatSaberPresence {
     internal class GamePresenceManager : IInitializable, ILateDisposable {

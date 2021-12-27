@@ -48,9 +48,6 @@
     <Reference Include="DiscordCore">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins\DiscordCore.dll</HintPath>
     </Reference>
-    <Reference Include="FizzyUtils">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins\FizzyUtils.dll</HintPath>
-    </Reference>
     <Reference Include="GameplayCore">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\GameplayCore.dll</HintPath>
     </Reference>

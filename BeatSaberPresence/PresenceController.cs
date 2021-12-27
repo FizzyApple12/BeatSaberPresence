@@ -2,7 +2,7 @@
 using Zenject;
 using Discord;
 using DiscordCore;
-using SiraUtil.Tools;
+using SiraUtil.Logging;
 using BeatSaberPresence.Config;
 
 namespace BeatSaberPresence {

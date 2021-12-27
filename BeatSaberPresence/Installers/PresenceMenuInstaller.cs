@@ -9,7 +9,7 @@ namespace BeatSaberPresence.Installers
         {
             Container.BindInterfacesTo<MenuButtonManager>().AsSingle();
             Container.Bind<Settings>().FromNewComponentAsViewController().AsSingle();
-            Container.Bind<ModFlowCoordinator>().FromNewComponentOnNewGameObject(nameof(ModFlowCoordinator)).AsSingle();
+            Container.Bind<ModFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle();
             Container.BindInterfacesTo<MenuPresenceManager>().FromNewComponentOnRoot().AsSingle();
         }
     }

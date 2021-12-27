@@ -11,15 +11,12 @@ namespace BeatSaberPresence {
     public class Plugin {
         internal const string Name = "BeatSaberPresence";
 
-        FizzyUtils.UsageTracker.UsageTrackerUser usageTrackerUser;
-
         [Init]
         public Plugin(Conf conf, IPALogger logger, Zenjector zenjector) {
-            zenjector.OnApp<PluginInstaller>().WithParameters(logger, conf.Generated<PluginConfig>());
-            zenjector.OnGame<PresenceGameInstaller>(false);
-            zenjector.OnMenu<PresenceMenuInstaller>();
-
-            usageTrackerUser = FizzyUtils.Utils.usageTracker.AddUser(Name);
+            zenjector.UseLogger(logger);
+            zenjector.Install<PluginInstaller>(Location.App, conf.Generated<PluginConfig>());
+            zenjector.Install<PresenceGameInstaller>(Location.GameCore);
+            zenjector.Install<PresenceMenuInstaller>(Location.Menu);
         }
 
         [OnEnable, OnDisable]
