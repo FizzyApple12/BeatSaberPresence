@@ -3,7 +3,7 @@
   "id": "BeatSaberPresence",
   "name": "BeatSaberPresence",
   "author": "FizzyApple12",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Discord Rich Presence for Beat Saber",
   "gameVersion": "1.19.0",
   "dependsOn": {

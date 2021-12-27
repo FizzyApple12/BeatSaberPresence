@@ -4,10 +4,10 @@ using IPA.Logging;
 using BeatSaberPresence.Config;
 
 namespace BeatSaberPresence.Installers {
-    internal class PluginInstaller : Installer<Logger, PluginConfig, PluginInstaller> {
+    internal class PluginInstaller : Installer<PluginConfig, PluginInstaller> {
         private readonly PluginConfig pluginConfig;
 
-        internal PluginInstaller(Logger logger, PluginConfig pluginConfig) {
+        internal PluginInstaller(PluginConfig pluginConfig) {
             this.pluginConfig = pluginConfig;
         }
 
