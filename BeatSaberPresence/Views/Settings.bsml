@@ -12,6 +12,10 @@
   <checkbox bind-value="true" value="countdown" apply-on-change="true" text="        Count Down in Game" hover-hint="Makes the timer count down to show the remaining time in the song when in game." />
   
   <horizontal pad-bottom="3" horizontal-fit="PreferredSize" />
+	
+  <!--<checkbox bind-value="true" value="join" apply-on-change="true" text="Multiplayer Join" hover-hint="Enables or disables the join button in your presence to allow people to join." />
+	
+  <horizontal pad-bottom="3" horizontal-fit="PreferredSize" /> for later use-->
   
   <text text='To change the Rich Presence text, edit the "BeatSaberPresence.json" file in a text editor' />
 </scrollable-settings-container>

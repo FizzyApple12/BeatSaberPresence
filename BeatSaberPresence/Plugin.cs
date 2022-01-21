@@ -15,8 +15,12 @@ namespace BeatSaberPresence {
         public Plugin(Conf conf, IPALogger logger, Zenjector zenjector) {
             zenjector.UseLogger(logger);
             zenjector.Install<PluginInstaller>(Location.App, conf.Generated<PluginConfig>());
-            zenjector.Install<PresenceGameInstaller>(Location.GameCore);
             zenjector.Install<PresenceMenuInstaller>(Location.Menu);
+            zenjector.Expose<CoreGameHUDController>("Gameplay");
+            zenjector.Install<PresenceGameInstaller>(Location.StandardPlayer);
+            zenjector.Install<PresenceGameInstaller>(Location.CampaignPlayer);
+            zenjector.Install<PresenceTutorialInstaller>(Location.Tutorial);
+            zenjector.Install<PresenceMultiplayerInstaller>(Location.MultiPlayer);
         }
 
         [OnEnable, OnDisable]

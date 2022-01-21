@@ -48,5 +48,11 @@ namespace BeatSaberPresence {
             get => pluginConfig.InGameCountDown;
             set => pluginConfig.InGameCountDown = value;
         }
+
+        [UIValue("join")]
+        public bool Join {
+            get => pluginConfig.AllowMultiplayerJoin;
+            set => pluginConfig.AllowMultiplayerJoin = value;
+        }
     }
 }

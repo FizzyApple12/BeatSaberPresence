@@ -15,6 +15,8 @@ namespace BeatSaberPresence.Config {
         public virtual bool ShowTimes { get; set; } = true;
         public virtual bool InGameCountDown { get; set; } = true;
 
+        public virtual bool AllowMultiplayerJoin { get; set; } = true;
+
         public virtual string MenuTopLine { get; set; } = "Main Menu";
         public virtual string MenuBottomLine { get; set; } = "";
         public virtual string MenuLargeImageLine { get; set; } = "Beat Saber";
