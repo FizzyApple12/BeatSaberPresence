@@ -78,6 +78,7 @@ This plugin is built using BSIPA4 so you need that, as well as
  * [SiraUtil](https://github.com/Auros/SiraUtil)
  * [BeatSaberMarkupLanguage](https://github.com/monkeymanboy/BeatSaberMarkupLanguage)
  * [DiscordCore](https://github.com/FizzyApple12/DiscordCore)
+ * [FizzyUtils](https://github.com/FizzyApple12/FizzyUtils)
 
 <br/>
 
